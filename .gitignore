@@ -1,0 +1,6 @@
+
+src/Java-MVC-Swing-TodoApp/
+build/classes/java/main/com/neoway/start/TodoApp/Views/TaskDialogScreen$1.class
+build/classes/java/main/com/neoway/start/TodoApp/Views/MainScreen$5.class
+build/classes/java/main/com/neoway/start/TodoApp/Views/ProjectDialogScreen$2.class
+*.class
