@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.neoway.start.TodoApp.Views;
 
 
@@ -32,6 +29,7 @@ public class MainScreen extends javax.swing.JFrame {
             initComponents();                                                       //chamando os métodos criados
             decorateTableTask();
             initDataController();
+            initComponentsModel();
     }
 
     /**
@@ -269,6 +267,12 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTaskTable.setGridColor(java.awt.Color.white);
         jTableTaskTable.setRowHeight(50);
         jTableTaskTable.setSelectionBackground(new java.awt.Color(0, 204, 204));
+        jTableTaskTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableTaskTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTaskTableMouseClicked(evt);
+            }
+        });
         jScrollPaneTaskTable.setViewportView(jTableTaskTable);
 
         javax.swing.GroupLayout jPanelTaskPanelFirstLayout = new javax.swing.GroupLayout(jPanelTaskPanelFirst);
@@ -343,6 +347,21 @@ public class MainScreen extends javax.swing.JFrame {
         
        
     }//GEN-LAST:event_jLabelTaskIconMouseClicked
+
+    private void jTableTaskTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTaskTableMouseClicked
+        // TODO add your handling code here:                                            // Método para salvar se a tarefa foi concluida  ( Pega um ponto na tela clicado)
+        int linha = jTableTaskTable.rowAtPoint(evt.getPoint());                     // um evento de clique é disparado a partir de um ponto na tela e guardado  na var linha
+        int coluna = jTableTaskTable.columnAtPoint(evt.getPoint());                 // um evento de clique é disparado a partir de um ponto na tela e guardado na va coluna
+
+        switch (coluna){                                                            
+            case 3 -> {                                                                 
+                Task task = taskModel.getTasks().get(linha);                        // se a coluna for 3 o taskModel carrega a lista de tarefas e carrega a linha da lista de tarefas que disparou o evento de clique
+                taskController.update(task);                                           // chamamos o controller para atualizar no banco de dados esta mudança de valor da tarefa concluida
+             }                                                                          
+        }                                                                               //RESUMO: Quando clicamos na GUI e mudamos o status da tarefa isso chama uo método setValueAt no TaskModelTable    
+                                                                                        // Este evento de mudança de status dispara um novo evento de clique que gaurda a linha e coluna clicados.
+                                                                                        // Este evento de clique do mouse chama o Model de tarefas carregar todas as tarefas e selecionar apenas a tarefa que teve uma linha modificada na coluna 3. Atualizamos esta tarefa.
+    }//GEN-LAST:event_jTableTaskTableMouseClicked
 
     /**
      * @param args the command line arguments
