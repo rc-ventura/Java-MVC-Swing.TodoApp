@@ -1,8 +1,8 @@
 package com.neoway.start.TodoApp.Util;
 
-import com.mysql.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
