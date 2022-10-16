@@ -1,10 +1,11 @@
+
 package com.neoway.start.TodoApp.Controllers;
 
-import com.mysql.jdbc.PreparedStatement;
 import com.neoway.start.TodoApp.Models.Project;
 import com.neoway.start.TodoApp.Util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ProjectController {
                                                                                         //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
                                                                                          //Cria um PreparedStatment, classe usada para executar a query
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
 
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
@@ -56,7 +57,7 @@ public class ProjectController {
                                                                                          //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
                                                                                    //Cria um PreparedStatment, classe usada para executar a query
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
 
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
@@ -78,7 +79,7 @@ public class ProjectController {
     public List<Project> getAll() {
         String sql = "SELECT * FROM projects";
 
-        List<Project> projects = new ArrayList<>();
+        List<Project> projects = new ArrayList();
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -88,7 +89,7 @@ public class ProjectController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
 
             resultSet = statement.executeQuery();
 
@@ -123,7 +124,7 @@ public class ProjectController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
             statement.setInt(1, idProject);
             statement.execute();
         } catch (Exception e) {

@@ -92,7 +92,7 @@ public class TagController {
     public List<Tag> getAll() {
         String sql = "SELECT * FROM tags";
 
-        List<Tag> tags = new ArrayList<>();
+        List<Tag> tags = new ArrayList();
 
         Connection conn = null;
         PreparedStatement stmt = null;

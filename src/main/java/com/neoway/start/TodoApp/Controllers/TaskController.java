@@ -1,10 +1,10 @@
 package com.neoway.start.TodoApp.Controllers;
 
-import com.mysql.jdbc.PreparedStatement;
 import com.neoway.start.TodoApp.Models.Task;
 import com.neoway.start.TodoApp.Util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class TaskController {
                                                                                    //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
                                                                                    //Cria um PreparedStatment, classe usada para executar a query
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
 
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());
@@ -54,7 +54,7 @@ public class TaskController {
     public void update(Task task) {
 
         String sql = "UPDATE tasks SET idProject = ?, name = ?, description = ?,"
-                + " completed = ?, notes = ?, deadline = ?, , createdAt = ?,"
+                + " completed = ?, notes = ?, deadline = ?,  createdAt = ?,"
                 + " updatedAt = ? WHERE id = ?";
 
         Connection connection = null;
@@ -64,7 +64,7 @@ public class TaskController {
                                                                                          //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
                                                                                         //Cria um PreparedStatment, classe usada para executar a query
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
 
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());                                 //setando os valores do statement
@@ -89,7 +89,7 @@ public class TaskController {
     public List<Task> getAll(int idProject) {                                           
         String sql = "SELECT * FROM tasks WHERE idProject = ?";                     //Query para buscar uma lista de tarefas no banco de dados
 
-        List<Task> tasks = new ArrayList<>();                                       // lista de tarefas que será devolvida quando chamada do método  acontecer (return)
+        List<Task> tasks = new ArrayList();                                       // lista de tarefas que será devolvida quando chamada do método  acontecer (return)
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -99,7 +99,7 @@ public class TaskController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
             statement.setInt(1, idProject);                                     // setando o id do projeto associado a tarefa para consulta no banco de dados
             resultset = statement.executeQuery();                               // resultSet guarda o resultado da execução da query
             
@@ -134,7 +134,7 @@ public class TaskController {
     public List<Task> getByProjectId(int idProject) {
         String sql = "SELECT * FROM tasks where idProject = ?";
 
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList();
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -144,7 +144,7 @@ public class TaskController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
 
             statement.setInt(1, idProject);
 
@@ -185,7 +185,7 @@ public class TaskController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement = (PreparedStatement) connection.prepareStatement(sql);
+            statement =  connection.prepareStatement(sql);
             statement.setInt(1, idTask);
             statement.execute();
         } catch (Exception e) {
