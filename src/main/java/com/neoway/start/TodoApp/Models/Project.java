@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Project {
 
-    private int Id;
+    private int id;
     private String name;
     private String description;
     private List<Task> tasks;
