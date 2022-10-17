@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author R.C_Ventura
@@ -24,10 +23,10 @@ public class TaskController {
         PreparedStatement statement = null;
 
         try {
-                                                                                   //Cria uma conex�o com o banco
+            //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
-                                                                                   //Cria um PreparedStatment, classe usada para executar a query
-            statement =  connection.prepareStatement(sql);
+            //Cria um PreparedStatment, classe usada para executar a query
+            statement = connection.prepareStatement(sql);
 
             statement.setInt(1, task.getIdProject());
             statement.setString(2, task.getName());
@@ -38,15 +37,14 @@ public class TaskController {
             statement.setDate(7, new Date(task.getCreatedAt().getTime())); // podmeos só declarar um new Date mas importar o pacote Date sql
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
 
-                                                                                             //Executa a sql para inser��o dos dados
+            //Executa a sql para inser��o dos dados
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar a tarefa " + e.fillInStackTrace(), e);
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
-                                                                                 //Fecha as conex�es
-          
-            
+            //Fecha as conex�es
+
         }
 
     }
@@ -61,9 +59,9 @@ public class TaskController {
         PreparedStatement statement = null;
 
         try {
-                                                                                         //Cria uma conex�o com o banco
+            //Cria uma conex�o com o banco
             connection = ConnectionFactory.getConnection();
-                                                                                        //Cria um PreparedStatment, classe usada para executar a query
+            //Cria um PreparedStatment, classe usada para executar a query
             statement = connection.prepareStatement(sql);
 
             statement.setInt(1, task.getIdProject());
@@ -76,17 +74,17 @@ public class TaskController {
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
             statement.setInt(9, task.getId());
 
-                                                                                     //Executa a sql para inser��o dos dados
+            //Executa a sql para inser��o dos dados
             statement.execute();
         } catch (Exception e) {
             throw new RuntimeException("Erro em atualizar a tarefa", e);
         } finally {
-                     ConnectionFactory.closeConnection(connection,  statement);
+            ConnectionFactory.closeConnection(connection, statement);
 
         }
     }
 
-    public List<Task> getAll(int idProject) {                                           
+    public List<Task> getAll(int idProject) {
         String sql = "SELECT * FROM tasks WHERE idProject = ?";                     //Query para buscar uma lista de tarefas no banco de dados
 
         List<Task> tasks = new ArrayList();                                       // lista de tarefas que será devolvida quando chamada do método  acontecer (return)
@@ -94,17 +92,16 @@ public class TaskController {
         Connection connection = null;
         PreparedStatement statement = null;
 
-                                                                                    //Classe que vai recuperar os dados do banco de dados pois temos um retorno neste método
+        //Classe que vai recuperar os dados do banco de dados pois temos um retorno neste método
         ResultSet resultset = null;
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement =  connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, idProject);                                     // setando o id do projeto associado a tarefa para consulta no banco de dados
             resultset = statement.executeQuery();                               // resultSet guarda o resultado da execução da query
-            
-           
-                                                                                         //Enquanto existir dados no banco de dados, faça
+
+            //Enquanto existir dados no banco de dados, faça
             while (resultset.next()) {
 
                 Task task = new Task();
@@ -124,11 +121,11 @@ public class TaskController {
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao buscar as tarefas", e);
-        } finally { 
+        } finally {
             ConnectionFactory.closeConnection(connection, statement, resultset);
-                 
+
         }
-          return tasks;                                                               
+        return tasks;
     }
 
     public List<Task> getByProjectId(int idProject) {
@@ -144,7 +141,7 @@ public class TaskController {
 
         try {
             connection = ConnectionFactory.getConnection();
-            statement =  connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
 
             statement.setInt(1, idProject);
 
@@ -171,7 +168,7 @@ public class TaskController {
         } catch (Exception ex) {
             throw new RuntimeException("Erro ao buscar as tarefas", ex);
         } finally {
-                    ConnectionFactory.closeConnection(connection, statement, resultSet);
+            ConnectionFactory.closeConnection(connection, statement, resultSet);
         }
         return tasks;
     }
@@ -184,17 +181,15 @@ public class TaskController {
         PreparedStatement statement = null;
 
         try {
-            connection = ConnectionFactory.getConnection();
-            statement =  connection.prepareStatement(sql);
-            statement.setInt(1, idTask);
+            connection = ConnectionFactory.getConnection();                     //Criação da conexão com banco de dados
+            statement = connection.prepareStatement(sql);                       // preparando a query
+            statement.setInt(1, idTask);                                           //setando os valores
             statement.execute();
         } catch (Exception e) {
             throw new RuntimeException("Erro ao deletar a tarefa", e);
         } finally {
-                    ConnectionFactory.closeConnection(connection, statement);
-            }
+            ConnectionFactory.closeConnection(connection, statement);
         }
-
     }
 
-
+}
