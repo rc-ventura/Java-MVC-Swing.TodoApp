@@ -192,7 +192,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         try {
             
             Task task = new Task();                                              //criando uma tarefa
-            task.setIdProject(1);                                   // setando o id do projeto associado a tarefa 
+            task.setIdProject(project.getId());                                   // setando o id do projeto associado a tarefa 
             task.setName(jTextFieldName.getText());                             // setaando os atributos da tarefa com input da tela
             task.setDescription(jTextAreaDescription.getText());
             task.setNotes(jTextAreaNotes.getText());
