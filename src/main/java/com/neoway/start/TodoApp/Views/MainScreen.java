@@ -2,7 +2,7 @@ package com.neoway.start.TodoApp.Views;
 
 import com.neoway.start.TodoApp.Controllers.*;
 import com.neoway.start.TodoApp.Models.*;
-import com.neoway.start.TodoApp.Util.TaskTableModel;
+import com.neoway.start.TodoApp.Util.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;
@@ -27,9 +27,10 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
 
         initComponents();                                                       //chamando os métodos criados
-        decorateTableTask();
         initDataController();
         initComponentsModel();
+        decorateTableTask();
+     
     }
 
     /**
@@ -335,7 +336,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_ProjectIconMouseClicked
 
     private void jLabelTaskIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTaskIconMouseClicked
-        // TODO add your handling code here:
+
         TaskDialogScreen taskDialogScreen
                 = new TaskDialogScreen(this, rootPaneCheckingEnabled);                     //Criando uma tela de cadastro de projetos
          int projectIndex = jListProject.getSelectedIndex();                              // A GUI JList pega o index do projeto selecionado                                                                        //setando o Id do projeto associado a tarefa
@@ -348,7 +349,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelTaskIconMouseClicked
 
     private void jTableTaskTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTaskTableMouseClicked
-        // TODO add your handling code here:                                            // Método para salvar se a tarefa foi concluida  ( Pega um ponto na tela clicado)
+                                                                                // Método para salvar se a tarefa foi concluida  ( Pega um ponto na tela clicado)
         int linha = jTableTaskTable.rowAtPoint(evt.getPoint());                     // um evento de clique é disparado a partir de um ponto na tela e guardado  na var linha
         int coluna = jTableTaskTable.columnAtPoint(evt.getPoint());                 // um evento de clique é disparado a partir de um ponto na tela e guardado na va coluna
          Task task = taskModel.getTasks().get(linha);                               // Criar object Task e carregar no model seu index
@@ -359,7 +360,13 @@ public class MainScreen extends javax.swing.JFrame {
                 taskController.update(task);                                           // chamamos o controller para atualizar no banco de dados esta mudança de valor da tarefa concluida
                 break;
             
-            case 5 :
+            case 4 :
+                
+                
+                break;
+                
+                
+             case 5 :
                 taskController.removeById(task.getId());                        // coluna 4 é a opção excluir. Quando clicado dispara a exclusão no banco com o Task Controller
                 taskModel.getTasks().remove(task);                             // removemos também do model a tarefa 
                 int projectIndex = jListProject.getSelectedIndex();             // Para atualizar a lista de taarefas , precisamos guardar na GUI o projeto que devemos atualizar pelo seu index
@@ -368,6 +375,9 @@ public class MainScreen extends javax.swing.JFrame {
                 
                 
                 break;
+               
+                
+                
             }
             
             
@@ -377,7 +387,7 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableTaskTableMouseClicked
 
     private void jListProjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProjectMouseClicked
-        // TODO add your handling code here:                                       //Evento de clique disparado com clique na lista de projetos
+                                                                                     //Evento de clique disparado com clique na lista de projetos
         int projectIndex = jListProject.getSelectedIndex();                        // A GUI guarda o index da lista de projetos na qual foi clicado (guarda qual projeto foi clicado)
         Project project = (Project) projectsModel.get(projectIndex);               // Um objeto projeto é criado para carregar na GUI através do model o projeto que possui o indice do clique da GUI
         loadTasks(project.getId());                                                // Chamamos o método que carrega as tarefas do respectivo projeto atrvés do seu id.
@@ -446,8 +456,18 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTaskTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         jTableTaskTable.getTableHeader().setBackground(new Color(51, 102, 255));
         jTableTaskTable.getTableHeader().setForeground(new Color(255, 255, 255));
-
-        jTableTaskTable.setAutoCreateRowSorter(true);                                //Criando um Sort para organização das colunas
+        
+        jTableTaskTable.getColumnModel().getColumn(2).setCellRenderer(new DeadlineCell());  // Aqui chamamos o GUI Table para carregar o model das colunas da Jtable
+                                                                                              // carregamos os objetos do model da coluna dealine (2) e chamamos o renderizador personalizado para customizar esta coluna
+        
+         jTableTaskTable.getColumnModel().getColumn(4).setCellRenderer               // Caregamos o model para a GUI da coluna index 4 (coluna 5)
+         (new ButtonCellRender("edit"));                                             // setamos o renderizador personalizado e instanciamos o objeto ButtonCellRender
+                                                                                    //  atribuímos ao atributo buttonType a string edit ( nome da pasta do icone)        
+         jTableTaskTable.getColumnModel().getColumn(5).setCellRenderer
+         (new ButtonCellRender("delete"));                                           // atribuímos ao atributo buttonType a string delete ( nome da pasta do icone)
+                                                                                              
+         jTableTaskTable.setAutoCreateRowSorter(true);                                //Criando um Sort para organização das colunas
+        
     }
 
     public void initDataController() {
