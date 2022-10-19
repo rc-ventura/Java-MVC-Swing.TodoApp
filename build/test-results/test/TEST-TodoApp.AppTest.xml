@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TodoApp.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-19T13:32:39" hostname="DESKTOP-I3F5REI" time="0.069">
+  <properties/>
+  <testcase name="appHasAGreeting()" classname="TodoApp.AppTest" time="0.069"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
