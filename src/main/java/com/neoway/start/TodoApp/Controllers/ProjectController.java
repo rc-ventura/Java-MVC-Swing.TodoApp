@@ -107,7 +107,7 @@ public class ProjectController {
                                                                                      //Adiciono o contato recuperado, a lista de contatos
                 projects.add(project);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar os projetos", e);
         } finally {
             ConnectionFactory.closeConnection(connection, statement, resultSet);
